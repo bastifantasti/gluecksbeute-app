@@ -13,24 +13,28 @@ class IndexPage extends React.Component {
     constructor(props) {
         // Required step: always call the parent class' constructor
         super(props);
+        this.state = {value: 'false'};
 
-        // Set the state directly. Use props if necessary.
-        this.state = {
-            selectedOption: "test"
+        this.handleChange = this.handleChange.bind(this);
 
-        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleChange(event) {
+        this.setState({value: event.target.value});
     }
 
-    handleOptionChange (changeEvent) {
-        this.setState({
-            selectedOption: changeEvent.target.value
-        });
-    }
 
-    handleFormSubmit = async event => {
+
+    handleSubmit = async event => {
         event.preventDefault();
-        const response = await axios.get(`https://d8epf4nd75.execute-api.eu-central-1.amazonaws.com/v1/calculator/costpermonth?gewicht=15.8&alter=6&unvertraeglich=false`)
+        let alter = event.target.alter.value;
+        let gewicht = event.target.gewicht.value
+
+        alert('Your favorite flavor is: ' + this.state.value);
+        let unv =this.state.value;
+        const response = await axios.get('https://d8epf4nd75.execute-api.eu-central-1.amazonaws.com/v1/calculator/costpermonth?gewicht='+gewicht+'&alter='+alter+'&unvertraeglich='+unv)
         console.log(response.data);
+        alert(response.data);
     }
 
 
@@ -73,16 +77,16 @@ class IndexPage extends React.Component {
                                 <div className="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch" data-aos="fade-up"
                                      data-aos-delay="200">
 
-                                    <form onSubmit={this.handleFormSubmit} role="form" className="php-email-form">
+                                    <form onSubmit={this.handleSubmit} role="form" className="php-email-form">
                                         <div className="form-row">
                                             <div className="form-group col-md-6">
-                                                <label htmlFor="name">Alter in Monaten</label>
+                                                <label htmlFor="alter">Alter in Monaten</label>
                                                 <input type="number" name="alter" className="form-control" id="name"
                                                        data-rule="minlen:1" data-msg="Mindestens eine Zahl eintragen"/>
                                                 <div className="validate"></div>
                                             </div>
                                             <div className="form-group col-md-6">
-                                                <label htmlFor="name">Gewicht in KG</label>
+                                                <label htmlFor="gewicht">Gewicht in KG</label>
                                                 <input type="number" className="form-control" name="gewicht" id="email"
                                                        data-rule="minlen:1"
                                                        data-msg="Bitte ein valides Gewicht eintragen"/>
@@ -91,10 +95,10 @@ class IndexPage extends React.Component {
                                         </div>
                                         <div className="form-group">
                                             <label>Generelle Unveerträglichkeit</label><br/>
-                                            <label><input type="radio" value="n"
-                                                          checked={this.state.selectedOption === 'n'} onChange={this.handleOptionChange}/>Nein</label><br/><label><input type="radio"
-                                                                                                         value="unv" checked={this.state.selectedOption === 'unv'} onChange={this.handleOptionChange}/>Ja</label>
-                                            <div className="validate"></div>
+                                            <select value={this.state.value} onChange={this.handleChange}>
+                                                <option value="false">Nein</option>
+                                                <option value="true">Ja</option>
+                                            </select>
                                         </div>
 
                                         <div className="">
