@@ -7,51 +7,45 @@ import { logout, isLoggedIn } from "../utils/auth"
 import { Auth } from 'aws-amplify'
 
 const Header = ({ siteTitle }) => (
-  <div
-    style={{
-      background: 'rebeccapurple',
-      marginBottom: '1.45rem',
-    }}
-  >
-    <div
-      style={{
-        margin: '0 auto',
-        maxWidth: 960,
-        padding: '1.45rem 1.0875rem',
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={styles.headerTitle}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-      {
-        isLoggedIn() && (
-          <p
-            onClick={
-              () => Auth.signOut().then(logout(() => navigate('/app/login'))).catch(err => console.log('eror:', err))
-            }
-            style={styles.link}
-          >Sign Out</p>
-        )
-      }
-    </div>
-  </div>
-)
+    <header id="header" className="fixed-top">
+        <div className="container-fluid d-flex">
 
-const styles = {
-  headerTitle: {
-    color: 'white',
-    textDecoration: 'none',
-  },
-  link: {
-    cursor: 'pointer',
-    color: 'white',
-    textDecoration: 'underline'
-  }
-}
+            <div className="logo mr-auto">
+                <h1 className="text-light"><a href="index.html"><span>Glücksbeute</span></a></h1>
+                </div>
+
+            <nav className="nav-menu d-none d-lg-block">
+                <ul>
+                    <li className="active"><a href="#header">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li className="drop-down"><a href="">Drop Down</a>
+                        <ul>
+                            <li><a href="#">Drop Down 1</a></li>
+                            <li className="drop-down"><a href="#">Drop Down 2</a>
+                                <ul>
+                                    <li><a href="#">Deep Drop Down 1</a></li>
+                                    <li><a href="#">Deep Drop Down 2</a></li>
+                                    <li><a href="#">Deep Drop Down 3</a></li>
+                                    <li><a href="#">Deep Drop Down 4</a></li>
+                                    <li><a href="#">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Drop Down 3</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                            <li><a href="#">Drop Down 5</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#contact">Contact Us</a></li>
+
+                    <li className="get-started"><a href="#about">Get Started</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+)
 
 export default Header
